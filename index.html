@@ -38,7 +38,7 @@
             100% { opacity: 0; transform: scale(0.4); }
         }
 
-        /* 画像を表示するエリア */
+        /* 画像を表示するエリア（3秒間、完全に透明で待機する設定を追加） */
         .img-container {
             width: 100vw;
             max-height: 95vh;
@@ -47,25 +47,29 @@
             align-items: center;
             overflow: hidden;
             position: relative;
-            z-index: 10; /* 星よりも手前に画像を表示 */
-            animation: magicRise 3.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            z-index: 10;
+            
+            /* 👇 3秒後にアニメーションを開始し、終わった後の形を維持(forwards)する命令 */
+            animation: magicRise 3.5s cubic-bezier(0.25, 1, 0.5, 1) 3s forwards;
+            opacity: 0; /* 最初は完全に透明 */
         }
 
         .nazotoki-img {
             width: 100vw;
             height: auto;
             object-fit: contain;
-            animation: imgFade 3.5s ease-out forwards;
+            /* 👇 画像自体も3秒後に明るくなり始める命令 */
+            animation: imgFade 3.5s ease-out 3s forwards;
         }
 
         @keyframes magicRise {
-            0% { clip-path: inset(100% 0 0 0); }
-            100% { clip-path: inset(0 0 0 0); }
+            0% { opacity: 0; clip-path: inset(100% 0 0 0); }
+            100% { opacity: 1; clip-path: inset(0 0 0 0); }
         }
 
         @keyframes imgFade {
-            0% { opacity: 0; filter: blur(15px) brightness(1.5); }
-            100% { opacity: 1; filter: blur(0) brightness(1); }
+            0% { filter: blur(15px) brightness(1.5); }
+            100% { filter: blur(0) brightness(1); }
         }
     </style>
 </head>
@@ -172,9 +176,9 @@
     <div class="star" style="top: 78%; left: 87%; width: 2px; height: 2px; animation-delay: 0.4s;"></div>
     <div class="star" style="top: 61%; left: 33%; width: 4px; height: 4px; animation-delay: 3.6s;"></div>
 
-    <!-- 📥 3秒遅れて出現する魔法の画像エリア（styleを追加しました） -->
-    <div class="img-container" style="animation-delay: 3s; opacity: 0;">
-        <img src="ChristmasConcert.PNG" alt="謎解きの指示" class="nazotoki-img" style="animation-delay: 3s;">
+   <!-- 📥 画像を表示する枠エリア（大文字のPNGで完璧に固定！） -->
+    <div class="img-container">
+        <img src="ChristmasConcert.PNG" alt="謎解きの指示" class="nazotoki-img">
     </div>
 
 </body>
