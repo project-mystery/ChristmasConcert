@@ -20,43 +20,43 @@
             align-items: center;
         }
         .nazotoki-img {
-            /* 👇 横の黒い線を消し、画面の横幅にぴったり合わせる設定 */
+            /* 横幅を画面サイズぴったりにする設定 */
             width: 100vw;
             max-height: 95vh;
             height: auto;
             object-fit: contain;
             
-            /* 👇 アニメーション：2.5秒かけて粉から画像を形成する */
-            animation: snowForming 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            /* 👇 時間を「3.0s（3秒）」に変更し、よりゆっくり滑らかに積もるように設定 */
+            animation: snowForming 3.0s cubic-bezier(0.3, 0.1, 0.3, 1) forwards;
             opacity: 0;
         }
 
-        /* 👇 粉（砂嵐と縦のブレ）から雪のように積もって完成する動きの指示 */
+        /* 👇 3秒間の時間の使い方を細かく調整（半分以上の時間をかけて粉を維持します） */
         @keyframes snowForming {
             0% {
                 opacity: 0;
-                transform: translateY(-50px) scale(0.95); /* 上から雪のように降ってくる開始位置 */
-                filter: blur(15px) contrast(300%) brightness(3); /* 画像を粉々（砂嵐の粒子）にする効果 */
+                transform: translateY(-60px) scale(0.93); /* 最初は少し高い位置から */
+                filter: blur(20px) contrast(350%) brightness(3); /* 完全にバラバラの粉状態 */
             }
-            15% {
-                opacity: 0.4;
-                transform: translateY(-30px) scale(0.97);
-                filter: blur(10px) contrast(250%) brightness(2.5);
+            30% {
+                opacity: 0.3;
+                transform: translateY(-40px) scale(0.95);
+                filter: blur(15px) contrast(300%) brightness(2.5); /* まだまだ激しい砂嵐状態 */
             }
-            45% {
-                opacity: 0.8;
-                transform: translateY(-10px) scale(0.99); /* 徐々に下に積もっていく */
-                filter: blur(4px) contrast(180%) brightness(1.5);  /* だんだん粉がまとまってくる */
+            60% {
+                opacity: 0.6;
+                transform: translateY(-20px) scale(0.97); /* 1.8秒地点でようやく半分くらい積もる */
+                filter: blur(8px) contrast(200%) brightness(1.8);  /* 徐々に文字の輪郭が見え始める */
             }
-            75% {
-                opacity: 0.95;
-                transform: translateY(-2px) scale(1);
-                filter: blur(1px) contrast(120%) brightness(1.1);
+            85% {
+                opacity: 0.9;
+                transform: translateY(-5px) scale(0.99);  /* あと一歩で完成の手前 */
+                filter: blur(2px) contrast(130%) brightness(1.2);  /* ほぼ見えているけれどまだ少しモヤついている */
             }
             100% {
                 opacity: 1;
-                transform: translateY(0) scale(1); /* ぴったり元の位置に積もって静止 */
-                filter: blur(0) contrast(100%) brightness(1); /* クッキリ綺麗な画像に形成 */
+                transform: translateY(0) scale(1); /* 3秒ぴったりで完全に着地 */
+                filter: blur(0) contrast(100%) brightness(1); /* クッキリ綺麗な画像が完成 */
             }
         }
     </style>
