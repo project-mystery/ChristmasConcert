@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>警告</title>
+    <title>指示</title>
     <style>
         * {
             box-sizing: border-box;
@@ -13,45 +13,56 @@
         body {
             width: 100vw;
             height: 100vh;
-            background-color: #050508; /* より深い闇の黒 */
+            background-color: #050508; /* 深い闇の黒 */
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
         }
         .nazotoki-img {
-            max-width: 90vw;
-            max-height: 90vh;
-            width: auto;
+            /* 👇 横の黒い線を消し、画面の横幅にぴったり合わせる設定 */
+            width: 100vw;
+            max-height: 95vh;
             height: auto;
             object-fit: contain;
-            border-radius: 5px;
-            box-shadow: 0 0 25px rgba(0, 255, 0, 0.2); /* 怪しいサイバーグリーンの光 */
             
-            /* 👇 1.2秒間でノイズ点滅を実行する設定 */
-            animation: cyberNoise 1.2s linear forwards;
+            /* 👇 アニメーション：2.5秒かけて粉から画像を形成する */
+            animation: snowForming 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
             opacity: 0;
         }
 
-        /* 👇 サイバーノイズ・点滅の動きの指示 */
-        @keyframes cyberNoise {
-            0%   { opacity: 0; transform: scale(0.95) skewX(0deg); filter: brightness(1); }
-            10%  { opacity: 1; transform: scale(1) skewX(5deg); filter: brightness(2); }  /* 点滅1回目＋横ブレ */
-            15%  { opacity: 0; transform: scale(0.98) skewX(-5deg); }
-            30%  { opacity: 0; }
-            35%  { opacity: 1; transform: scale(1) skewX(0deg); filter: brightness(1.5); } /* 点滅2回目 */
-            40%  { opacity: 0; }
-            55%  { opacity: 0; }
-            60%  { opacity: 1; filter: brightness(2); }                                    /* 点滅3回目 */
-            65%  { opacity: 0; }
-            80%  { opacity: 0; }
-            85%  { opacity: 1; transform: scale(1.02) skewX(3deg); filter: hue-rotate(90deg); } /* 最後の激しいブレ */
-            100% { opacity: 1; transform: scale(1) skewX(0deg); filter: brightness(1) hue-rotate(0deg); } /* 正常に表示 */
+        /* 👇 粉（砂嵐と縦のブレ）から雪のように積もって完成する動きの指示 */
+        @keyframes snowForming {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.95); /* 上から雪のように降ってくる開始位置 */
+                filter: blur(15px) contrast(300%) brightness(3); /* 画像を粉々（砂嵐の粒子）にする効果 */
+            }
+            15% {
+                opacity: 0.4;
+                transform: translateY(-30px) scale(0.97);
+                filter: blur(10px) contrast(250%) brightness(2.5);
+            }
+            45% {
+                opacity: 0.8;
+                transform: translateY(-10px) scale(0.99); /* 徐々に下に積もっていく */
+                filter: blur(4px) contrast(180%) brightness(1.5);  /* だんだん粉がまとまってくる */
+            }
+            75% {
+                opacity: 0.95;
+                transform: translateY(-2px) scale(1);
+                filter: blur(1px) contrast(120%) brightness(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1); /* ぴったり元の位置に積もって静止 */
+                filter: blur(0) contrast(100%) brightness(1); /* クッキリ綺麗な画像に形成 */
+            }
         }
     </style>
 </head>
 <body>
-    <!-- テスト用に怪しい緑ベースのダミー画像URLにしています -->
+    <!-- 👇 ここにあなたの画像ファイルを指定してください -->
     <img src="ChristmasConcert.PNG" alt="謎解きの指示" class="nazotoki-img">
 </body>
 </html>
