@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>指示</title>
+    <title>聖なる指示</title>
     <style>
         * {
             box-sizing: border-box;
@@ -13,14 +13,14 @@
         body {
             width: 100vw;
             height: 100vh;
-            background-color: #050508; /* 深い闇の黒 */
+            background-color: #050510; /* クリスマスの聖夜をイメージした深いミッドナイトブルー */
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
         }
         
-        /* 画像を表示するエリアの土台（ここで下から上への出現をコントロールします） */
+        /* 画像を表示するエリア（下から魔法がせり上がる土台） */
         .img-container {
             width: 100vw;
             max-height: 95vh;
@@ -30,8 +30,8 @@
             overflow: hidden;
             position: relative;
             
-            /* 👇 3秒間かけて、下から上に向かって画像を切り抜く（積もるような出現） */
-            animation: snowRise 3.0s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            /* 3.5秒かけて下からじわじわと魔法で出現させる */
+            animation: magicRise 3.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
         .nazotoki-img {
@@ -39,47 +39,53 @@
             height: auto;
             object-fit: contain;
             
-            /* 👇 出現する瞬間にザラザラした砂嵐（ノイズ）のような加工をかける */
-            animation: noiseFilter 3.0s ease-out forwards;
+            /* 画像自体に光の魔法をかけるアニメーション */
+            animation: magicLight 3.5s ease-out forwards;
         }
 
-        /* 🛠️ 【新演出】下からせり上がるように出現させる指示 */
-        @keyframes snowRise {
+        /* 🪄 【新演出】下から魔法が積もるように出現する指示 */
+        @keyframes magicRise {
             0% {
-                clip-path: inset(100% 0 0 0); /* 最初は画像の下100%が隠れている状態 */
+                clip-path: inset(100% 0 0 0); /* 最初は完全に隠れている */
             }
-            30% {
-                clip-path: inset(80% 0 0 0);  /* 0.9秒：下から20%だけうっすら現れる（積もり始め） */
+            40% {
+                clip-path: inset(60% 0 0 0);  /* じわじわ下から金色に光りながら現れる */
             }
-            60% {
-                clip-path: inset(40% 0 0 0);  /* 1.8秒：下から60%まで現れる */
-            }
-            85% {
-                clip-path: inset(10% 0 0 0);  /* 2.5秒：ほぼ上まで現れる */
+            75% {
+                clip-path: inset(15% 0 0 0);  /* 魔法が上まで満ちていく */
             }
             100% {
-                clip-path: inset(0 0 0 0);    /* 3.0秒：100%すべてが出現して完成 */
+                clip-path: inset(0 0 0 0);    /* 3.5秒で完全に完成 */
             }
         }
 
-        /* 🛠️ 出現するときのザラザラした霧・砂嵐を表現する指示 */
-        @keyframes noiseFilter {
+        /* ✨ ゴールドときらめきの魔法エフェクトの指示 */
+        @keyframes magicLight {
             0% {
                 opacity: 0;
-                filter: blur(15px) contrast(300%) brightness(2.5); /* 強いザラザラ霧 */
-                transform: scale(0.97);
+                /* 最初は黄金の光のモヤ（セピア＋高輝度）がかかり、星のきらめきでぼやけている状態 */
+                filter: blur(25px) sepia(100%) saturate(500%) brightness(2) drop-shadow(0 0 30px #ffd700);
+                transform: scale(0.95);
+            }
+            20% {
+                opacity: 0.5;
+                /* チカチカと魔法の星が瞬くような輝きの変化 */
+                filter: blur(18px) sepia(80%) saturate(400%) brightness(3) drop-shadow(0 0 40px #fff);
             }
             50% {
-                opacity: 0.7;
-                filter: blur(8px) contrast(200%) brightness(1.5);  /* 中くらいのザラザラ */
+                opacity: 0.8;
+                filter: blur(10px) sepia(40%) saturate(200%) brightness(1.8) drop-shadow(0 0 30px #ffd700);
+                transform: scale(0.98);
             }
-            85% {
+            80% {
                 opacity: 0.95;
-                filter: blur(2px) contrast(120%) brightness(1.1);  /* ほぼクリア */
+                /* 魔法の光がすーっと晴れていく瞬間 */
+                filter: blur(3px) sepia(10%) saturate(120%) brightness(1.2) drop-shadow(0 0 15px #ffd700);
             }
             100% {
                 opacity: 1;
-                filter: blur(0) contrast(100%) brightness(1);     /* 完全にクッキリ */
+                /* 完全にクリアで綺麗な画像に着地 */
+                filter: blur(0) sepia(0%) saturate(100%) brightness(1) drop-shadow(0 0 0px transparent);
                 transform: scale(1);
             }
         }
@@ -87,7 +93,6 @@
 </head>
 <body>
 
-    <!-- 構造が変わったため、画像を1つの「枠（container）」で囲んでいます -->
     <div class="img-container">
         <!-- 👇 ここにあなたの画像ファイルを指定してください -->
         <img src="ChristmasConcert.PNG" alt="謎解きの指示" class="nazotoki-img">
