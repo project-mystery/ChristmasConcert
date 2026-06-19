@@ -19,50 +19,79 @@
             justify-content: center;
             align-items: center;
         }
-        .nazotoki-img {
-            /* 横幅を画面サイズぴったりにする設定 */
+        
+        /* 画像を表示するエリアの土台（ここで下から上への出現をコントロールします） */
+        .img-container {
             width: 100vw;
             max-height: 95vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            
+            /* 👇 3秒間かけて、下から上に向かって画像を切り抜く（積もるような出現） */
+            animation: snowRise 3.0s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .nazotoki-img {
+            width: 100vw;
             height: auto;
             object-fit: contain;
             
-            /* 👇 時間を「3.0s（3秒）」に変更し、よりゆっくり滑らかに積もるように設定 */
-            animation: snowForming 3.0s cubic-bezier(0.3, 0.1, 0.3, 1) forwards;
-            opacity: 0;
+            /* 👇 出現する瞬間にザラザラした砂嵐（ノイズ）のような加工をかける */
+            animation: noiseFilter 3.0s ease-out forwards;
         }
 
-        /* 👇 3秒間の時間の使い方を細かく調整（半分以上の時間をかけて粉を維持します） */
-        @keyframes snowForming {
+        /* 🛠️ 【新演出】下からせり上がるように出現させる指示 */
+        @keyframes snowRise {
             0% {
-                opacity: 0;
-                transform: translateY(-60px) scale(0.93); /* 最初は少し高い位置から */
-                filter: blur(20px) contrast(350%) brightness(3); /* 完全にバラバラの粉状態 */
+                clip-path: inset(100% 0 0 0); /* 最初は画像の下100%が隠れている状態 */
             }
             30% {
-                opacity: 0.3;
-                transform: translateY(-40px) scale(0.95);
-                filter: blur(15px) contrast(300%) brightness(2.5); /* まだまだ激しい砂嵐状態 */
+                clip-path: inset(80% 0 0 0);  /* 0.9秒：下から20%だけうっすら現れる（積もり始め） */
             }
             60% {
-                opacity: 0.6;
-                transform: translateY(-20px) scale(0.97); /* 1.8秒地点でようやく半分くらい積もる */
-                filter: blur(8px) contrast(200%) brightness(1.8);  /* 徐々に文字の輪郭が見え始める */
+                clip-path: inset(40% 0 0 0);  /* 1.8秒：下から60%まで現れる */
             }
             85% {
-                opacity: 0.9;
-                transform: translateY(-5px) scale(0.99);  /* あと一歩で完成の手前 */
-                filter: blur(2px) contrast(130%) brightness(1.2);  /* ほぼ見えているけれどまだ少しモヤついている */
+                clip-path: inset(10% 0 0 0);  /* 2.5秒：ほぼ上まで現れる */
+            }
+            100% {
+                clip-path: inset(0 0 0 0);    /* 3.0秒：100%すべてが出現して完成 */
+            }
+        }
+
+        /* 🛠️ 出現するときのザラザラした霧・砂嵐を表現する指示 */
+        @keyframes noiseFilter {
+            0% {
+                opacity: 0;
+                filter: blur(15px) contrast(300%) brightness(2.5); /* 強いザラザラ霧 */
+                transform: scale(0.97);
+            }
+            50% {
+                opacity: 0.7;
+                filter: blur(8px) contrast(200%) brightness(1.5);  /* 中くらいのザラザラ */
+            }
+            85% {
+                opacity: 0.95;
+                filter: blur(2px) contrast(120%) brightness(1.1);  /* ほぼクリア */
             }
             100% {
                 opacity: 1;
-                transform: translateY(0) scale(1); /* 3秒ぴったりで完全に着地 */
-                filter: blur(0) contrast(100%) brightness(1); /* クッキリ綺麗な画像が完成 */
+                filter: blur(0) contrast(100%) brightness(1);     /* 完全にクッキリ */
+                transform: scale(1);
             }
         }
     </style>
 </head>
 <body>
-    <!-- 👇 ここにあなたの画像ファイルを指定してください -->
-    <img src="ChristmasConcert.PNG" alt="謎解きの指示" class="nazotoki-img">
+
+    <!-- 構造が変わったため、画像を1つの「枠（container）」で囲んでいます -->
+    <div class="img-container">
+        <!-- 👇 ここにあなたの画像ファイルを指定してください -->
+        <img src="ChristmasConcert.PNG" alt="謎解きの指示" class="nazotoki-img">
+    </div>
+
 </body>
 </html>
