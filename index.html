@@ -13,14 +13,32 @@
         body {
             width: 100vw;
             height: 100vh;
-            background-color: #050510; /* クリスマスの聖夜をイメージした深いミッドナイトブルー */
+            background-color: #050512; /* 聖夜のディープブルー */
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
         }
         
-        /* 画像を表示するエリア（下から魔法がせり上がる土台） */
+        /* 👇 あなたが持ってきてくれた星のスタイルをベースに設定 */
+        .star {
+            position: absolute;
+            display: block;
+            background-color: #fff;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 4s infinite ease-in-out;
+        }
+
+        /* 👇 星がキラキラ光るアニメーション（そのまま採用！） */
+        @keyframes twinkle {
+            0% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); filter: drop-shadow(0 0 6px #fff); }
+            100% { opacity: 0; transform: scale(0.5); }
+        }
+
+        /* 画像を表示するエリア（下からじわじわ現れる） */
         .img-container {
             width: 100vw;
             max-height: 95vh;
@@ -29,8 +47,7 @@
             align-items: center;
             overflow: hidden;
             position: relative;
-            
-            /* 3.5秒かけて下からじわじわと魔法で出現させる */
+            z-index: 10; /* 星よりも手前に画像を表示します */
             animation: magicRise 3.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
@@ -38,61 +55,33 @@
             width: 100vw;
             height: auto;
             object-fit: contain;
-            
-            /* 画像自体に光の魔法をかけるアニメーション */
-            animation: magicLight 3.5s ease-out forwards;
+            animation: imgFade 3.5s ease-out forwards;
         }
 
-        /* 🪄 【新演出】下から魔法が積もるように出現する指示 */
         @keyframes magicRise {
-            0% {
-                clip-path: inset(100% 0 0 0); /* 最初は完全に隠れている */
-            }
-            40% {
-                clip-path: inset(60% 0 0 0);  /* じわじわ下から金色に光りながら現れる */
-            }
-            75% {
-                clip-path: inset(15% 0 0 0);  /* 魔法が上まで満ちていく */
-            }
-            100% {
-                clip-path: inset(0 0 0 0);    /* 3.5秒で完全に完成 */
-            }
+            0% { clip-path: inset(100% 0 0 0); }
+            100% { clip-path: inset(0 0 0 0); }
         }
 
-        /* ✨ ゴールドときらめきの魔法エフェクトの指示 */
-        @keyframes magicLight {
-            0% {
-                opacity: 0;
-                /* 最初は黄金の光のモヤ（セピア＋高輝度）がかかり、星のきらめきでぼやけている状態 */
-                filter: blur(25px) sepia(100%) saturate(500%) brightness(2) drop-shadow(0 0 30px #ffd700);
-                transform: scale(0.95);
-            }
-            20% {
-                opacity: 0.5;
-                /* チカチカと魔法の星が瞬くような輝きの変化 */
-                filter: blur(18px) sepia(80%) saturate(400%) brightness(3) drop-shadow(0 0 40px #fff);
-            }
-            50% {
-                opacity: 0.8;
-                filter: blur(10px) sepia(40%) saturate(200%) brightness(1.8) drop-shadow(0 0 30px #ffd700);
-                transform: scale(0.98);
-            }
-            80% {
-                opacity: 0.95;
-                /* 魔法の光がすーっと晴れていく瞬間 */
-                filter: blur(3px) sepia(10%) saturate(120%) brightness(1.2) drop-shadow(0 0 15px #ffd700);
-            }
-            100% {
-                opacity: 1;
-                /* 完全にクリアで綺麗な画像に着地 */
-                filter: blur(0) sepia(0%) saturate(100%) brightness(1) drop-shadow(0 0 0px transparent);
-                transform: scale(1);
-            }
+        @keyframes imgFade {
+            0% { opacity: 0; filter: blur(15px) brightness(1.5); }
+            100% { opacity: 1; filter: blur(0) brightness(1); }
         }
     </style>
 </head>
 <body>
 
+    <!-- 👇 画面全体にきらきら瞬く星をたくさん配置しました！位置やサイズをバラバラにしています -->
+    <div class="star" style="top: 15%; left: 10%; width: 4px; height: 4px; animation-delay: 0s;"></div>
+    <div class="star" style="top: 25%; left: 80%; width: 6px; height: 6px; animation-delay: 1s;"></div>
+    <div class="star" style="top: 40%; left: 25%; width: 3px; height: 3px; animation-delay: 2s;"></div>
+    <div class="star" style="top: 65%; left: 85%; width: 5px; height: 5px; animation-delay: 0.5s;"></div>
+    <div class="star" style="top: 80%; left: 15%; width: 4px; height: 4px; animation-delay: 1.5s;"></div>
+    <div class="star" style="top: 50%; left: 50%; width: 7px; height: 7px; animation-delay: 2.5s;"></div>
+    <div class="star" style="top: 10%; left: 60%; width: 3px; height: 3px; animation-delay: 3s;"></div>
+    <div class="star" style="top: 75%; left: 70%; width: 5px; height: 5px; animation-delay: 1.2s;"></div>
+
+    <!-- 画像のエリア -->
     <div class="img-container">
         <!-- 👇 ここにあなたの画像ファイルを指定してください -->
         <img src="ChristmasConcert.PNG" alt="謎解きの指示" class="nazotoki-img">
